@@ -65,9 +65,6 @@ const images = [
 ];
 
 const list_element = document.querySelector(".gallery");
-list_element.addEventListener("click", (event) => {
-  event.preventDefault();
-});
 
 let new_elements = "";
 images.forEach((element) => {
@@ -84,3 +81,17 @@ images.forEach((element) => {
     </li>`;
 });
 list_element.insertAdjacentHTML("afterBegin", new_elements);
+
+const gallery_click_action = (event) => {
+  event.preventDefault();
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
+
+  const instance = basicLightbox.create(
+    `<img class="gallery-image-original" src="${event.target.dataset.source}" alt="${event.target.alt}">`
+  );
+  instance.show();
+};
+
+list_element.addEventListener("click", gallery_click_action);
